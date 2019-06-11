@@ -1,0 +1,22 @@
+eureka:
+  client:
+    service-url:
+      # 注册中心地址
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8767
+
+spring:
+  application:
+    name: zuul-service
+zuul:
+  # 配置网关路由
+  routes:
+    # 以/api-a/ 开头的请求都转发给service-ribbon服务；以/api-b/开头的请求都转发给service-feign服务；
+    # 注意： serviceId 对应的是 spring.application.name 的名称
+    api-a:
+      path: /api-a/**
+      serviceId: ribbon-service
+    api-b:
+      path: /api-b/**
+      serviceId: feign-service

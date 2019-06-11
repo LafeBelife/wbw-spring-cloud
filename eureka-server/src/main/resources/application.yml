@@ -1,0 +1,23 @@
+# eureka是一个高可用的组件，
+#   它没有后端缓存，每一个实例注册之后需要向注册中心发送心跳（因此可以在内存中完成），
+#   在默认情况下erureka server也是一个eureka client ,必须要指定一个 server。
+
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    # 是否向注册中心注册自己（因为它就是注册中心，负载均衡时需要用到）
+    fetch-registry: false
+    # eureka服务器访问地址
+    service-url:
+      # eureka.client.service-url时写defaultZone系统没有任何提示，会让你以为没有这个配置或者是不是自己写错了
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    # 是否需要检索服务（检索服务是client端的事）
+    register-with-eureka: false
+
+spring:
+  application:
+    name: eurka-server
